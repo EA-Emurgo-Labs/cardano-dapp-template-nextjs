@@ -18,8 +18,8 @@ export const MainLayout = ({ children, title }: PropsWithChildren<{}>) => {
           marginLeft: 256
         }}
       >
-        <div className="flex justify-between mb-7">
-          {title && <div>title</div>}
+        <div className="flex justify-between">
+          {title && <div>{title}</div>}
           <WalletConnect />
         </div>
         {children}

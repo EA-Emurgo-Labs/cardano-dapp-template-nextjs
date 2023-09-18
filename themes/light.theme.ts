@@ -17,20 +17,25 @@ const theme: ThemeConfig = {
     Menu: {
       itemSelectedBg: Colors.DaybreakBlue.main1,
       boxShadow: "-1px 0px 0px 0px #F0F0F0 inset",
-      itemSelectedBoxShadow: "-3px 0px 0px 0px #00c689 inset"
+      itemSelectedBoxShadow: "-3px 0px 0px 0px #00c689 inset",
     },
     Logout: {
       colorBgContainer: Colors.gray.gray2,
       colorBorder: Colors.gray.gray4,
     },
     Card: {
-      boxShadow: "0px 6px 16px 0px rgba(0, 0, 0, 0.08)"
+      boxShadow: "0px 6px 16px 0px rgba(0, 0, 0, 0.08)",
     },
     Upload: {
       colorFillAlter: Colors.gray.gray3,
       colorText: Colors.gray.gray7,
       colorTextDescription: Colors.gray.gray8,
-    }
+    },
+  },
+  exchange: {
+    Card: {
+      boxShadow: "0px 6px 16px 0px rgba(0, 0, 0, 0.08)",
+    },
   },
 };
 

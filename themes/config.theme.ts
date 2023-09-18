@@ -23,6 +23,9 @@ const defaultConfig: ThemeConfig = {
     Upload: {
       fontSize: 14,
       borderRadiusLG: 2
+    },
+    Button: {
+      paddingContentHorizontal: 25,
     }
   },
 };
