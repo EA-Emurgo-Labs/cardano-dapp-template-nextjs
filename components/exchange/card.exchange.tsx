@@ -2,6 +2,7 @@ import { twMerge } from "tailwind-merge";
 import { ComponentProps } from "react";
 import { theme, Card, Button } from "antd";
 import { useAddressManager } from "@/hooks/account.hook";
+import { toFormat } from "@/utils/bignumber.util";
 
 const { useToken } = theme;
 
@@ -16,11 +17,15 @@ export const ExchangeCard = ({
   const CardTypeMap = {
     buy: {
       name: "Buy",
-      button: <Button type="primary">Buy</Button>
+      button: <Button type="primary">Buy</Button>,
     },
     sell: {
       name: "Sell",
-      button: <Button type="primary" danger >Stop</Button>
+      button: (
+        <Button type="primary" danger>
+          Stop
+        </Button>
+      ),
     },
   };
 
@@ -30,11 +35,11 @@ export const ExchangeCard = ({
     <Card
       className={twMerge("", className)}
       bodyStyle={{
-        height: '100%'
+        height: "100%",
       }}
       style={Object.assign(
         {
-          boxShadow: token.Card.boxShadow,
+          boxShadow: token.Exchange.Card.boxShadow,
           height: 184,
           opacity: !account ? 0.3 : 1,
         },
@@ -43,7 +48,9 @@ export const ExchangeCard = ({
     >
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col">
-          <span className="semibold text-xl inline-block mb-1">{trade.title}</span>
+          <span className="font-semibold text-xl inline-block mb-1">
+            {trade.title}
+          </span>
           <span
             style={{
               color: token.colorTextTertiary,
@@ -56,12 +63,12 @@ export const ExchangeCard = ({
           <div className="flex flex-col ">
             <span className="text-sm">{cardType.name} Price:</span>
             <span
-              className="semibold"
+              className="font-semibold"
               style={{
                 color: token.colorPrimary,
               }}
             >
-              {trade.price}
+              {toFormat(trade.price)}
             </span>
           </div>
           {cardType.button}

@@ -31,10 +31,10 @@ const theme: ThemeConfig = {
       colorText: Colors.gray.gray7,
       colorTextDescription: Colors.gray.gray8,
     },
-  },
-  exchange: {
-    Card: {
-      boxShadow: "0px 6px 16px 0px rgba(0, 0, 0, 0.08)",
+    Exchange: {
+      Card: {
+        boxShadow: "0px 3px 6px -4px rgba(0, 0, 0, 0.12)",
+      },
     },
   },
 };

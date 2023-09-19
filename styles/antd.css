@@ -1,3 +1,7 @@
 .ant-typography {
   font-size: inherit!important;
 }
+
+.ant-tabs-tab-active {
+  font-weight: 600;
+}

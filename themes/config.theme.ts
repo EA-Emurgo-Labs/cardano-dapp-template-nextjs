@@ -22,10 +22,14 @@ const defaultConfig: ThemeConfig = {
     },
     Upload: {
       fontSize: 14,
-      borderRadiusLG: 2
+      borderRadiusLG: 2,
     },
     Button: {
       paddingContentHorizontal: 25,
+    },
+    Tabs: {
+      horizontalItemPadding: '16px 0 18px 0',
+      titleFontSize: 16,
     }
   },
 };

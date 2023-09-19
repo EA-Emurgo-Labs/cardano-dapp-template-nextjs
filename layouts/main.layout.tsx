@@ -5,24 +5,20 @@ import { WalletConnect } from "@/components/wallet-connect.component";
 
 const { useToken } = theme;
 
-export const MainLayout = ({ children, title }: PropsWithChildren<{}>) => {
+export const MainLayout = ({ children }: PropsWithChildren<{}>) => {
   const { token } = useToken();
   return (
     <div className="flex w-full">
       <Siderbar />
       <div
-        className="min-h-screen flex pl-12 pt-14 pr-32 flex-col"
+        className="min-h-screen pl-12 py-14 pr-32"
         style={{
           backgroundColor: token.colorBgLayout,
           width: "inherit",
-          marginLeft: 256
+          marginLeft: 256,
         }}
       >
-        <div className="flex justify-between">
-          {title && <div>{title}</div>}
-          <WalletConnect />
-        </div>
-        {children}
+        <div className="flex flex-col relative">{children}</div>
       </div>
     </div>
   );
