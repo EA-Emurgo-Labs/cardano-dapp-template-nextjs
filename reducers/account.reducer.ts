@@ -1,22 +1,34 @@
-import { createReducer } from '@reduxjs/toolkit'
-import { toggleTheme, updateAddress } from '@/actions/account.action'
+import { createReducer } from "@reduxjs/toolkit";
+import {
+  updateProfile,
+  updateAuth,
+  updateWallet,
+} from "@/actions/account.action";
 
 export interface AccountState {
-    isDark: boolean
-    address: string
+  isDark: boolean;
+  address: string;
 }
 
 export const initialState: AccountState = {
-    isDark: false,
-    address: ''
-}
+  address: "",
+  profile: {},
+  auth: {},
+  wallet: {},
+};
 
-export default createReducer(initialState, builder =>
-    builder
-        .addCase(toggleTheme, state => {
-            state.isDark = !state.isDark
-        })
-        .addCase(updateAddress, (state, { payload: { address } }) => {
-            state.address = address
-        }),
-)
+export default createReducer(initialState, (builder) =>
+  builder
+    .addCase(updateProfile, (state, { payload: { profile } }) => {
+      console.log("updateProfile: ", profile);
+      state.profile = Object.assign({}, state.profile, profile);
+    })
+    .addCase(updateAuth, (state, { payload: { auth } }) => {
+      console.log("updateAuth: ", auth);
+      state.auth = Object.assign({}, state.auth, auth);
+    })
+    .addCase(updateWallet, (state, { payload: { wallet } }) => {
+      console.log("updateWallet: ", wallet);
+      state.wallet = Object.assign({}, state.wallet, wallet);
+    })
+);

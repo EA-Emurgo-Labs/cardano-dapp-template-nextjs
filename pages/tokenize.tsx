@@ -15,7 +15,7 @@ import {
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { MainLayout } from "@/layouts/main.layout";
-import { useAddressManager } from "@/hooks/account.hook";
+import { useWalletManager } from "@/hooks/account.hook";
 import { WalletConnect } from "@/components/wallet-connect.component";
 
 const { useToken } = theme;
@@ -72,7 +72,7 @@ export default function TokenizePage() {
 
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
-  const [account] = useAddressManager();
+  const [wallet] = useWalletManager();
 
   const handleChange: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
@@ -107,12 +107,12 @@ export default function TokenizePage() {
     <MainLayout>
       <WalletConnect className="absolute" />
       <div className="mt-2 pt-16">
-        <Form name="mint-token" disabled={!account}>
+        <Form name="mint-token" disabled={!wallet.address}>
           <Row gutter={22}>
             <Col span="12">
               <ICard
                 token={token}
-                account={account}
+                account={wallet.address}
                 step={{
                   no: 1,
                   title: "Upload your file",
@@ -147,7 +147,7 @@ export default function TokenizePage() {
             <Col span="12">
               <ICard
                 token={token}
-                account={account}
+                account={wallet.address}
                 step={{
                   no: 2,
                   title: "Upload IPFS",

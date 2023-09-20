@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { ComponentProps } from "react";
 import { theme, Card, Button } from "antd";
-import { useAddressManager } from "@/hooks/account.hook";
+import { useWalletManager } from "@/hooks/account.hook";
 import { toFormat } from "@/utils/bignumber.util";
 
 const { useToken } = theme;
@@ -12,7 +12,7 @@ export const ExchangeCard = ({
   trade,
 }: ComponentProps<{}>) => {
   const { token } = useToken();
-  const [account] = useAddressManager();
+  const [wallet] = useWalletManager();
 
   const CardTypeMap = {
     buy: {
@@ -41,7 +41,7 @@ export const ExchangeCard = ({
         {
           boxShadow: token.Exchange.Card.boxShadow,
           height: 184,
-          opacity: !account ? 0.3 : 1,
+          opacity: !wallet.address ? 0.3 : 1,
         },
         style
       )}

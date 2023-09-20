@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { CreditCardOutlined } from "@ant-design/icons";
-import type { MenuProps, MenuTheme } from "antd";
+import type { MenuProps } from "antd";
 import { theme, Button, Menu, Avatar, Space } from "antd";
 import Logo from "assets/logo.png";
 import { CoinOutlinedIcon } from "@/components/icons/coin-outlined.icon";
@@ -36,12 +37,9 @@ export const Siderbar = () => {
   const { token } = useToken();
   const router = useRouter();
 
-  const handleItemClick = useCallback(
-    (item) => {
-      router.push(item.key);
-    },
-    [router]
-  );
+  const handleItemClick = useCallback((item) => {
+    router.push(item.key);
+  }, []);
 
   const items: MenuItem[] = [
     getItem("Tokenize", "CoinOutlinedIcon"),
@@ -57,9 +55,13 @@ export const Siderbar = () => {
         width: 256,
       }}
     >
-      <div className="flex justify-center items-center" style={{ height: 60 }}>
+      <Link
+        href="/"
+        className="flex justify-center items-center"
+        style={{ height: 60 }}
+      >
         <Image src={Logo} alt="Logo" width={185} />
-      </div>
+      </Link>
       <Menu
         onClick={handleItemClick}
         selectedKeys={router.pathname}
@@ -70,7 +72,7 @@ export const Siderbar = () => {
         className="flex border-t border-solid  justify-between px-4 py-2 w-full absolute bottom-0"
         style={{
           backgroundColor: token.Logout.colorBgContainer,
-          borderColor: token.Logout.colorBorder
+          borderColor: token.Logout.colorBorder,
         }}
       >
         <Space>

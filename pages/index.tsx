@@ -5,8 +5,8 @@ import { MainLayout } from "@/layouts/main.layout";
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
-    router.push("/tokenize");
-  }, [router]);
+    return router.push("/tokenize");
+  }, []);
 
   return <MainLayout></MainLayout>;
 }

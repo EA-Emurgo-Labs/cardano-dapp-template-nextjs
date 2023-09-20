@@ -1,5 +1,12 @@
-import { createAction } from '@reduxjs/toolkit'
+import { createAction } from "@reduxjs/toolkit";
 
-export const toggleTheme = createAction<void>('account/toggleTheme')
-export const updateAddress =
-    createAction<{ address: string }>('account/updateAddress')
+export const updateAddress = createAction<{ address: string }>(
+  "account/updateAddress"
+);
+
+export const updateProfile =
+  createAction<{ profile: Object }>("account/profile");
+
+export const updateWallet = createAction<{ wallet: Object }>("account/wallet");
+
+export const updateAuth = createAction<{ auth: Object }>("account/auth");

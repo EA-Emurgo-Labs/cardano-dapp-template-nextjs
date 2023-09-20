@@ -2,36 +2,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/reducers/index";
 import { useCallback } from "react";
 
-import {
-  toggleTheme as toggleThemeAction,
-  updateAddress as updateAddressAction,
-} from "@/actions/account.action";
+import * as  AccountActions from "@/actions/account.action";
 
-export function useThemeManager() {
+export function useProfileManager(): [Object, (profile: Object) => void] {
   const dispatch = useDispatch();
-  const isDark = useSelector<AppState, AppState["account"]["isDark"]>(
-    (state) => state.account.isDark
+  const profile = useSelector<AppState, AppState["account"]["profile"]>(
+    (state) => state.account.profile
   );
 
-  const toggleTheme = useCallback(() => {
-    dispatch(toggleThemeAction());
-  }, [dispatch]);
+  const updateProfile = useCallback((profile: any) => {
+    dispatch(AccountActions.updateProfile({ profile }));
+  }, []);
 
-  return [isDark, toggleTheme];
+  return [profile, updateProfile];
 }
 
-export function useAddressManager(): [string, (address: string) => void] {
+export function useWalletManager(): [Object, (wallet: Object) => void] {
   const dispatch = useDispatch();
-  const address = useSelector<AppState, AppState["account"]["address"]>(
-    (state) => state.account.address
+  const wallet = useSelector<AppState, AppState["account"]["wallet"]>(
+    (state) => state.account.wallet
   );
 
-  const updateAddress = useCallback(
-    (address: any) => {
-      dispatch(updateAddressAction({ address }));
-    },
-    [dispatch]
+  const updateWallet = useCallback((wallet: any) => {
+    dispatch(AccountActions.updateWallet({ wallet }));
+  }, []);
+
+  return [wallet, updateWallet];
+}
+
+export function useAuthManager(): [Object, (auth: Object) => void] {
+  const dispatch = useDispatch();
+  const auth = useSelector<AppState, AppState["account"]["auth"]>(
+    (state) => state.account.auth
   );
 
-  return [address, updateAddress];
+  const updateAuth = useCallback((auth: any) => {
+    dispatch(AccountActions.updateAuth({ auth }));
+  }, []);
+
+  return [auth, updateAuth];
 }
