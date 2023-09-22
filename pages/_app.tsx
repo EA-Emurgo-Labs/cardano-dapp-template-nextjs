@@ -8,6 +8,7 @@ import { wrapper } from "@/store/index.store";
 import { useStore, Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { StyleProvider } from "@ant-design/cssinjs";
 
 import getTheme from "@/themes/config.theme";
 
@@ -20,18 +21,20 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <ConfigProvider theme={getTheme()}>
-      <Provider store={store}>
-        <PersistGate
-          loading={
-            <div className="min-h-screen flex justify-center items-center">
-              <Spin size="large" />
-            </div>
-          }
-          persistor={persistor}
-        >
-          <Component {...pageProps} />
-        </PersistGate>
-      </Provider>
+      <StyleProvider hashPriority="high">
+        <Provider store={store}>
+          <PersistGate
+            loading={
+              <div className="min-h-screen flex justify-center items-center">
+                <Spin size="large" />
+              </div>
+            }
+            persistor={persistor}
+          >
+            <Component {...pageProps} />
+          </PersistGate>
+        </Provider>
+      </StyleProvider>
     </ConfigProvider>
   );
 }

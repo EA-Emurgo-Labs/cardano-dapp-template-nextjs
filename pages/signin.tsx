@@ -10,7 +10,6 @@ export default function Signin() {
   const [_, updateProfile] = useProfileManager();
 
   const handleFormSubmit = useCallback((values: any) => {
-    console.log("handleFormSubmit: ", values)
     updateProfile(values)
     router.push('/')
   }, []);

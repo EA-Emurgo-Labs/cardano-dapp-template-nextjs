@@ -8,6 +8,7 @@ import { theme, Button, Menu, Avatar, Space } from "antd";
 import Logo from "assets/logo.png";
 import { CoinOutlinedIcon } from "@/components/icons/coin-outlined.icon";
 import { LogoutOutlinedIcon } from "@/components/icons/logout-outlined.icon";
+import { useProfileManager } from "@/hooks/account.hook";
 
 const { useToken } = theme;
 const IconsMap = {
@@ -36,6 +37,7 @@ function getItem(
 export const Siderbar = () => {
   const { token } = useToken();
   const router = useRouter();
+  const [, updateProfile] = useProfileManager();
 
   const handleItemClick = useCallback((item) => {
     router.push(item.key);
@@ -45,6 +47,12 @@ export const Siderbar = () => {
     getItem("Tokenize", "CoinOutlinedIcon"),
     getItem("Exchange", "CreditCardOutlined"),
   ];
+
+  const handleLogout = useCallback(() => {
+    updateProfile({
+      email: "",
+    });
+  }, []);
 
   return (
     <div
@@ -86,7 +94,7 @@ export const Siderbar = () => {
           <span>Admin</span>
         </Space>
         <Button
-          onClick={() => router.push("/signin")}
+          onClick={handleLogout}
           type="text"
           size="small"
           style={{
