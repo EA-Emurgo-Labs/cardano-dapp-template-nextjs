@@ -24,7 +24,7 @@ export default function ExchangePage() {
   return (
     <MainLayout title={Title}>
       <Title />
-      <WalletConnect className="absolute top-4 right-0" />
+      <WalletConnect className="absolute top-[-40px]  sm:top-2.5 right-0" />
     </MainLayout>
   );
 }

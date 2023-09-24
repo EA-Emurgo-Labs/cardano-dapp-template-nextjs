@@ -8,7 +8,7 @@ import { useCallback } from "react";
 const { useToken } = theme;
 
 const ADDRESS = "0x75c0C766C7a4D0744544B4f8D37C8362f64219eC";
-export const WalletConnect = ({ className }: ComponentProps<{}>) => {
+export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
   const { token } = useToken();
   const [wallet, updateWallet] = useWalletManager();
 
@@ -25,13 +25,19 @@ export const WalletConnect = ({ className }: ComponentProps<{}>) => {
   }, []);
 
   const wrappedClassName = useMemo(() => {
-    return twMerge("flex items-center text-2xl", className)
+    return twMerge("flex absolute top-2 min-h-10 items-center text-sm sm:text-2xl ", className)
   }, [className])
+
+  const wrappedStyle = useMemo(() => {
+    return Object.assign({}, {
+      minHeight: 40
+    }, style)
+  }, [style])
 
   if (!wallet.address) {
     return (
-      <div className={wrappedClassName}>
-        <span className="font-semibold">Connect to your wallet:</span>
+      <div className={wrappedClassName} style={wrappedStyle}>
+        <span className="font-semibold hidden sm:block">Connect to your wallet:</span>
         <Button onClick={handleConnect} type="primary" className="ml-1.5">
           CONNECT WALLET
         </Button>
@@ -40,7 +46,7 @@ export const WalletConnect = ({ className }: ComponentProps<{}>) => {
   }
 
   return (
-    <div className={wrappedClassName}>
+    <div className={wrappedClassName} style={wrappedStyle}>
       <span className="font-semibold inline-block mr-1.5">Wallet:</span>
       <span style={{ color: token.colorTextTertiary }}>
         {truncate(wallet.address)}

@@ -20,15 +20,12 @@ export const initialState: AccountState = {
 export default createReducer(initialState, (builder) =>
   builder
     .addCase(updateProfile, (state, { payload: { profile } }) => {
-      console.log("updateProfile: ", profile);
       state.profile = Object.assign({}, state.profile, profile);
     })
     .addCase(updateAuth, (state, { payload: { auth } }) => {
-      console.log("updateAuth: ", auth);
       state.auth = Object.assign({}, state.auth, auth);
     })
     .addCase(updateWallet, (state, { payload: { wallet } }) => {
-      console.log("updateWallet: ", wallet);
       state.wallet = Object.assign({}, state.wallet, wallet);
     })
 );

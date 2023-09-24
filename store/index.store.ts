@@ -5,10 +5,11 @@ import thunkMiddleware from "redux-thunk";
 
 import storage from "@/store/sync-storage.store";
 import account from "@/reducers/account.reducer";
+import global from "@/reducers/global.reducer";
 
 const rootReducer = combineReducers({
   account,
-  rehydrated: false,
+  global
 });
 
 const bindMiddleware = (middleware) => {
@@ -29,7 +30,7 @@ const makeStore = ({ isServer }) => {
     const persistConfig = {
       timeout: 1000,
       key: "changeblock",
-      whitelist: ["account"], 
+      whitelist: ["account"],
       storage,
     };
 

@@ -26,14 +26,14 @@ const ICard = ({ children, token, step, style, account }) => {
       style={Object.assign(
         {
           boxShadow: token.Card.boxShadow,
-          height: "100%",
           opacity: !account ? 0.3 : 1,
+          minHeight: 240,
         },
         style
       )}
     >
       <div className="flex flex-col">
-        <Space className="text-3xl font-semibold mb-4">
+        <Space className="text-2xl sm:text-3xl font-semibold mb-4">
           <span
             style={{
               color: token.colorPrimary,
@@ -105,11 +105,11 @@ export default function TokenizePage() {
 
   return (
     <MainLayout>
-      <WalletConnect className="absolute" />
+      <WalletConnect />
       <div className="mt-2 pt-16">
         <Form name="mint-token" disabled={!wallet.address}>
-          <Row gutter={22}>
-            <Col span="12">
+          <Row gutter={[22, 22]}>
+            <Col span="24" sm={12}>
               <ICard
                 token={token}
                 account={wallet.address}
@@ -144,7 +144,7 @@ export default function TokenizePage() {
                 </Upload>
               </ICard>
             </Col>
-            <Col span="12">
+            <Col span="24" sm={12}>
               <ICard
                 token={token}
                 account={wallet.address}
@@ -167,18 +167,24 @@ export default function TokenizePage() {
               </ICard>
             </Col>
           </Row>
-          <div className="flex w-full" style={{ marginTop: 30 }}>
-            <Form.Item
-              label="Sell Price"
-              name="price"
-              style={{ minWidth: 359, marginRight: 22 }}
-            >
-              <InputNumber style={{ width: "100%" }} placeholder="Your price" />
-            </Form.Item>
-            <Button block type="primary" htmlType="submit">
-              Mint token
-            </Button>
-          </div>
+          <Row gutter={22} className="mt-7">
+            <Col span="24" sm={10}>
+              <Form.Item
+                label="Sell Price"
+                name="price"
+              >
+                <InputNumber
+                  style={{ width: "100%" }}
+                  placeholder="Your price"
+                />
+              </Form.Item>
+            </Col>
+            <Col span="24" sm={14}>
+              <Button block type="primary" htmlType="submit">
+                Mint token
+              </Button>
+            </Col>
+          </Row>
         </Form>
       </div>
     </MainLayout>

@@ -16,10 +16,11 @@ export default function Signin() {
 
   return (
     <AuthLayout title="Sign in">
+      <div className="mt-10 w-full">
+
       <Form
         name="signin"
         layout="vertical"
-        className="w-full mt-10"
         onFinish={handleFormSubmit}
         requiredMark={false}
         autoComplete="off"
@@ -47,12 +48,13 @@ export default function Signin() {
           Sign in
         </Button>
       </Form>
-      <Paragraph className="mt-6">
+      <Paragraph className="mt-6 text-center">
         <Text type="secondary">Don’t have an account?</Text>
         <Link className="ml-3" onClick={() => router.push("/signup")}>
           Sign up
         </Link>
       </Paragraph>
+      </div>
     </AuthLayout>
   );
 }

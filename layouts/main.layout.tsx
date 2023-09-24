@@ -1,8 +1,10 @@
-import { useEffect, PropsWithChildren } from "react";
-import { theme } from "antd";
+import { useEffect, PropsWithChildren, useState, useCallback } from "react";
+import { theme, Button } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Siderbar } from "@/components/siderbar.component";
 import { useProfileManager } from "@/hooks/account.hook";
 import { useRouter } from "next/navigation";
+import { useSiderbarManager } from "@/hooks/global.hook";
 
 const { useToken } = theme;
 
@@ -10,23 +12,39 @@ export const MainLayout = ({ children }: PropsWithChildren<{}>) => {
   const { token } = useToken();
   const [profile] = useProfileManager();
   const router = useRouter();
+  const [siderbar, updateSiderbar] = useSiderbarManager();
 
   useEffect(() => {
     if (!profile.email) {
       return router.push("/signin");
     }
   }, [profile]);
+
+  const handleSiderbarCollapsed = useCallback(() => {
+    updateSiderbar({
+      collapsed: !siderbar.collapsed,
+    });
+  }, [siderbar]);
+
   return (
     <div className="flex w-full">
       <Siderbar />
       <div
-        className="min-h-screen pl-12 py-14 pr-32"
+        className="min-h-screen pl-4 pr-4  sm:pl-12 py-14 sm:pr-32  sm:ml-64"
         style={{
           backgroundColor: token.colorBgLayout,
           width: "inherit",
-          marginLeft: 256,
         }}
       >
+        <div className="absolute top-4 block sm:hidden">
+          <Button
+            type="link"
+            onClick={handleSiderbarCollapsed}
+            icon={
+              siderbar.collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />
+            }
+          ></Button>
+        </div>
         <div className="flex flex-col relative">{children}</div>
       </div>
     </div>

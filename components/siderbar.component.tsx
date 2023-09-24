@@ -9,6 +9,7 @@ import Logo from "assets/logo.png";
 import { CoinOutlinedIcon } from "@/components/icons/coin-outlined.icon";
 import { LogoutOutlinedIcon } from "@/components/icons/logout-outlined.icon";
 import { useProfileManager } from "@/hooks/account.hook";
+import { useSiderbarManager } from "@/hooks/global.hook";
 
 const { useToken } = theme;
 const IconsMap = {
@@ -38,8 +39,12 @@ export const Siderbar = () => {
   const { token } = useToken();
   const router = useRouter();
   const [, updateProfile] = useProfileManager();
+  const [siderbar, updateSiderbar] = useSiderbarManager();
 
   const handleItemClick = useCallback((item) => {
+    updateSiderbar({
+      collapsed: false
+    });
     router.push(item.key);
   }, []);
 
@@ -52,15 +57,19 @@ export const Siderbar = () => {
     updateProfile({
       email: "",
     });
+    updateSiderbar({
+      collapsed: false
+    });
   }, []);
 
   return (
     <div
-      className="fixed h-screen"
+      className="fixed h-screen hidden sm:block z-10"
       style={{
         boxShadow: token.Menu.boxShadow,
         backgroundColor: token.colorBgBase,
         width: 256,
+        display: siderbar.collapsed ? 'block' : ''
       }}
     >
       <Link

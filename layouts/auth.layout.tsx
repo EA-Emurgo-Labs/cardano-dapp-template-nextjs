@@ -11,7 +11,7 @@ export const AuthLayout = ({ children, title }: PropsWithChildren<{}>) => {
   return (
     <main
       className={clsx([
-        "flex justify-center items-center flex-col relative",
+        "flex justify-center items-center flex-col relative min-h-screen px-4",
         AuthStyles.wrapper,
       ])}
     >
