@@ -5,9 +5,7 @@ import type { DocumentContext } from "next/document";
 
 const IDocument = () => (
   <Html lang="en">
-    <Head>
-      <title>Changeblock MVP</title>
-    </Head>
+    <Head />
     <body>
       <Main />
       <NextScript />

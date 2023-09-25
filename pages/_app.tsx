@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import "@/styles/antd.css";
 
 import type { AppProps } from "next/app";
+import Head from 'next/head'
 import React from "react";
 import { ConfigProvider, Spin } from "antd";
 import { wrapper } from "@/store/index.store";
@@ -12,8 +13,8 @@ import { StyleProvider } from "@ant-design/cssinjs";
 
 import getTheme from "@/themes/config.theme";
 
-function App({ Component, pageProps }: AppProps) {
-  const store = useStore((state) => state);
+function App({ Component, ...rest}: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
 
   const persistor = persistStore(store, {}, function () {
     persistor.persist();
@@ -21,6 +22,9 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <ConfigProvider theme={getTheme()}>
+      <Head>
+      <title>Changeblock MVP</title>
+      </Head>
       <StyleProvider hashPriority="high">
         <Provider store={store}>
           <PersistGate
@@ -31,7 +35,7 @@ function App({ Component, pageProps }: AppProps) {
             }
             persistor={persistor}
           >
-            <Component {...pageProps} />
+            <Component {...props.pageProps} />
           </PersistGate>
         </Provider>
       </StyleProvider>
@@ -39,4 +43,4 @@ function App({ Component, pageProps }: AppProps) {
   );
 }
 
-export default wrapper.withRedux(App);
+export default App;

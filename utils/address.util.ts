@@ -7,3 +7,4 @@ export const truncate = (addr) => {
   const end = addr.substring(l - 6, l);
   return `${pre}...${end}`;
 };
+

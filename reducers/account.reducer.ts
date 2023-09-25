@@ -14,7 +14,12 @@ export const initialState: AccountState = {
   address: "",
   profile: {},
   auth: {},
-  wallet: {},
+  wallet: {
+    network: '',
+    selected: '',
+    balance: '',
+    address: ''
+  },
 };
 
 export default createReducer(initialState, (builder) =>

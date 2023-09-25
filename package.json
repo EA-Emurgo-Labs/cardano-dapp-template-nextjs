@@ -24,6 +24,7 @@
     "eslint-config-next": "13.4.19",
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2",
+    "lucid-cardano": "^0.10.7",
     "next": "13.4.19",
     "next-redux-wrapper": "^8.1.0",
     "postcss": "8.4.29",
