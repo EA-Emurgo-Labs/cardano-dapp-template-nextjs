@@ -10,8 +10,8 @@ export const initialState: AccountState = {
   profile: {},
   auth: {},
   wallet: {
-    network: "",
-    selected: "",
+    networkId: "",
+    provider: "",
     balance: "",
     address: "",
   },

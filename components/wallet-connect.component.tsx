@@ -1,18 +1,20 @@
-import { Row, Col, Modal, Button, theme } from "antd";
+import { message, Row, Col, Modal, Button, theme } from "antd";
 import { twMerge } from "tailwind-merge";
 import { ComponentProps, useMemo, useState } from "react";
 import { truncate } from "@/utils/address.util";
 import { useWalletManager } from "@/hooks/account.hook";
 import { useCallback } from "react";
 import { Wallets } from "@/constants/wallets.constant";
-import { useWalletConnect } from "@/hooks/wallet.hook";
+import { useWalletConnect, useWalletDisconnect } from "@/hooks/wallet.hook";
 
 const { useToken } = theme;
 
 export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
   const { token } = useToken();
+  const [messageApi, contextHolder] = message.useMessage();
   const [wallet, updateWallet] = useWalletManager();
-  const [_, connectWallet] = useWalletConnect();
+  const [connectWallet] = useWalletConnect();
+  const [disconnectWallet] = useWalletDisconnect();
   const [selcectWalletModal, updateSelectWalletModal] = useState({
     open: false,
   });
@@ -27,16 +29,14 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
         open: false,
       });
     } catch (error) {
-      console.log("error:", error);
+      messageApi.error(error?.info || error?.message || error);
     } finally {
       setLoading("");
     }
   }, []);
 
   const handleDisconnect = useCallback(() => {
-    updateWallet({
-      address: "",
-    });
+    disconnectWallet();
   }, []);
 
   const wrappedClassName = useMemo(() => {
@@ -66,48 +66,54 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
 
   if (!wallet.address) {
     return (
-      <div className={wrappedClassName} style={wrappedStyle}>
-        <span className="font-semibold hidden sm:block">
-          Connect to your wallet:
-        </span>
-        <Button
-          onClick={handleConnectBtnClick}
-          type="primary"
-          className="ml-1.5"
-        >
-          CONNECT WALLET
-        </Button>
-        <Modal
-          title="Select a wallet"
-          open={selcectWalletModal.open}
-          footer={null}
-          onCancel={handleSelectWalletModalClose}
-        >
-          <Row gutter={[16, 16]}>
-            {Wallets.map((item) => (
-              <Col key={`wallet-${item.id}`} span={24}>
-                <Button
-                  onClick={() => handleConnect(item)}
-                  block
-                  style={{
-                    minHeight: 64,
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                  loading={loading == item.id}
-                >
-                  <div className="flex items-center justify-between" style={{
-                    width: 'inherit'
-                    }}>
-                    {item.name}
-                    <item.icon />
-                  </div>
-                </Button>
-              </Col>
-            ))}
-          </Row>
-        </Modal>
-      </div>
+      <>
+        {contextHolder}
+        <div className={wrappedClassName} style={wrappedStyle}>
+          <span className="font-semibold hidden sm:block">
+            Connect to your wallet:
+          </span>
+          <Button
+            onClick={handleConnectBtnClick}
+            type="primary"
+            className="ml-1.5"
+          >
+            CONNECT WALLET
+          </Button>
+          <Modal
+            title="Select a wallet"
+            open={selcectWalletModal.open}
+            footer={null}
+            onCancel={handleSelectWalletModalClose}
+          >
+            <Row gutter={[16, 16]}>
+              {Wallets.map((item) => (
+                <Col key={`wallet-${item.id}`} span={24}>
+                  <Button
+                    onClick={() => handleConnect(item)}
+                    block
+                    style={{
+                      minHeight: 64,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                    loading={loading == item.id}
+                  >
+                    <div
+                      className="flex items-center justify-between"
+                      style={{
+                        width: "inherit",
+                      }}
+                    >
+                      {item.name}
+                      <item.icon />
+                    </div>
+                  </Button>
+                </Col>
+              ))}
+            </Row>
+          </Modal>
+        </div>
+      </>
     );
   }
 

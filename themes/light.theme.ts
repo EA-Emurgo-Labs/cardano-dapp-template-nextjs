@@ -36,6 +36,9 @@ const theme: ThemeConfig = {
       contentBg: "#ffffff",
       headerBg: "#ffffff",
     },
+    Message: {
+      contentBg: "#ffffff"
+    },
     Exchange: {
       Card: {
         boxShadow: "0px 3px 6px -4px rgba(0, 0, 0, 0.12)",

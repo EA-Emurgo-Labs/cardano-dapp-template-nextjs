@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import "@/styles/antd.css";
 
 import type { AppProps } from "next/app";
-import Head from 'next/head'
+import Head from "next/head";
 import React from "react";
 import { ConfigProvider, Spin } from "antd";
 import { wrapper } from "@/store/index.store";
@@ -13,7 +13,7 @@ import { StyleProvider } from "@ant-design/cssinjs";
 
 import getTheme from "@/themes/config.theme";
 
-function App({ Component, ...rest}: AppProps) {
+function App({ Component, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
 
   const persistor = persistStore(store, {}, function () {
@@ -23,7 +23,7 @@ function App({ Component, ...rest}: AppProps) {
   return (
     <ConfigProvider theme={getTheme()}>
       <Head>
-      <title>Changeblock MVP</title>
+        <title>Changeblock MVP</title>
       </Head>
       <StyleProvider hashPriority="high">
         <Provider store={store}>
