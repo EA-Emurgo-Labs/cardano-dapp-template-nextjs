@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/reducers/index";
 import { useCallback } from "react";
 
-import * as  AccountActions from "@/actions/account.action";
+import * as AccountActions from "@/actions/account.action";
 
 export function useProfileManager(): [Object, (profile: Object) => void] {
   const dispatch = useDispatch();
@@ -41,4 +41,13 @@ export function useAuthManager(): [Object, (auth: Object) => void] {
   }, []);
 
   return [auth, updateAuth];
+}
+
+export function useAccountLogout() {
+  const dispatch = useDispatch();
+  const logout = useCallback(() => {
+    dispatch(AccountActions.logout());
+  }, []);
+
+  return [logout];
 }

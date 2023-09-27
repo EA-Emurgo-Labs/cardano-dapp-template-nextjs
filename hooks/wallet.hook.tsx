@@ -14,6 +14,7 @@ export function useWalletConnect(): [Object, (wallet: Object) => void] {
   const connectWallet = useCallback(async (item: any) => {
     const connector = item.getConnector();
     console.log("connectWallet: ", item);
+    console.log("connector: ", connector)
     if (!connector) {
       return window.open(item.extensionLink);
     }

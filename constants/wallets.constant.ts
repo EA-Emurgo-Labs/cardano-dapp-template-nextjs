@@ -1,5 +1,6 @@
 import { NamiIcon } from "@/components/icons/nami.icon";
 import { LaceIcon } from "@/components/icons/lace.icon";
+import { FlintIcon } from "@/components/icons/flint.icon";
 
 export enum WalletState {
   NOT_CONNECTED,
@@ -25,4 +26,12 @@ export const Lace = {
   icon: LaceIcon,
 };
 
-export const Wallets = [Nami, Lace];
+export const Flint = {
+  id: "Flint",
+  getConnector: () => window.cardano?.flint,
+  name: "Flint",
+  icon: FlintIcon,
+  extensionLink:
+    "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj?hl=en",
+};
+export const Wallets = [Nami, Lace, Flint];

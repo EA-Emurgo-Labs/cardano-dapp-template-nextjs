@@ -9,7 +9,6 @@ import { useWalletConnect } from "@/hooks/wallet.hook";
 
 const { useToken } = theme;
 
-const ADDRESS = "0x75c0C766C7a4D0744544B4f8D37C8362f64219eC";
 export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
   const { token } = useToken();
   const [wallet, updateWallet] = useWalletManager();
@@ -18,11 +17,19 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
     open: false,
   });
 
-  const handleConnect = useCallback((item) => {
+  const [loading, setLoading] = useState("");
+
+  const handleConnect = useCallback(async (item) => {
     try {
-      connectWallet(item);
+      setLoading(item.id);
+      await connectWallet(item);
+      updateSelectWalletModal({
+        open: false,
+      });
     } catch (error) {
       console.log("error:", error);
+    } finally {
+      setLoading("");
     }
   }, []);
 
@@ -84,9 +91,14 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
                   block
                   style={{
                     minHeight: 64,
+                    display: 'flex',
+                    alignItems: 'center'
                   }}
+                  loading={loading == item.id}
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between" style={{
+                    width: 'inherit'
+                    }}>
                     {item.name}
                     <item.icon />
                   </div>

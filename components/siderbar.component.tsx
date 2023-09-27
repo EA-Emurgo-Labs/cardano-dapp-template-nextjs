@@ -8,7 +8,7 @@ import { theme, Button, Menu, Avatar, Space } from "antd";
 import Logo from "assets/logo.png";
 import { CoinOutlinedIcon } from "@/components/icons/coin-outlined.icon";
 import { LogoutOutlinedIcon } from "@/components/icons/logout-outlined.icon";
-import { useProfileManager } from "@/hooks/account.hook";
+import { useProfileManager, useAccountLogout } from "@/hooks/account.hook";
 import { useSiderbarManager } from "@/hooks/global.hook";
 
 const { useToken } = theme;
@@ -40,10 +40,11 @@ export const Siderbar = () => {
   const router = useRouter();
   const [, updateProfile] = useProfileManager();
   const [siderbar, updateSiderbar] = useSiderbarManager();
+  const [logout] = useAccountLogout();
 
   const handleItemClick = useCallback((item) => {
     updateSiderbar({
-      collapsed: false
+      collapsed: false,
     });
     router.push(item.key);
   }, []);
@@ -54,11 +55,9 @@ export const Siderbar = () => {
   ];
 
   const handleLogout = useCallback(() => {
-    updateProfile({
-      email: "",
-    });
+    logout();
     updateSiderbar({
-      collapsed: false
+      collapsed: false,
     });
   }, []);
 
@@ -69,7 +68,7 @@ export const Siderbar = () => {
         boxShadow: token.Menu.boxShadow,
         backgroundColor: token.colorBgBase,
         width: 256,
-        display: siderbar.collapsed ? 'block' : ''
+        display: siderbar.collapsed ? "block" : "",
       }}
     >
       <Link
