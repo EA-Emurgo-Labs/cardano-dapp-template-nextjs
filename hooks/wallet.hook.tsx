@@ -2,21 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Lucid } from "lucid-cardano";
 import { AppState } from "@/reducers/index";
 import { useCallback } from "react";
+import { Wallets } from "@/wallets/index.wallet";
 
 import * as AccountActions from "@/actions/account.action";
 
-export function useWalletConnect(): [Object, (wallet: Object) => void] {
+export function useWalletConnect(): [(wallet: Object) => void] {
   const dispatch = useDispatch();
 
   const connectWallet = useCallback(async (item: any) => {
-    const connector = item.getConnector();
-    console.log("connectWallet: ", item);
-    console.log("connector: ", connector);
-    if (!connector) {
+    const wallet = new Wallets[item.id]();
+    if (!wallet.provider) {
       return window.open(item.extensionLink);
     }
-    const api = await connector.enable();
-    const networkId = await api.getNetworkId();
+    const api = await wallet.enable();
+    const networkId = await wallet.getNetworkId();
 
     const lucid = await Lucid.new();
     lucid.selectWallet(api);
@@ -27,7 +26,7 @@ export function useWalletConnect(): [Object, (wallet: Object) => void] {
       AccountActions.connectWallet({
         wallet: {
           address,
-          provider: item.name,
+          metadata: item,
           networkId: networkId,
         },
       })
@@ -37,7 +36,7 @@ export function useWalletConnect(): [Object, (wallet: Object) => void] {
   return [connectWallet];
 }
 
-export function useWalletDisconnect(): [Object, (wallet: Object) => void] {
+export function useWalletDisconnect(): [(wallet: Object) => void] {
   const dispatch = useDispatch();
 
   const disconnectWallet = useCallback(() => {

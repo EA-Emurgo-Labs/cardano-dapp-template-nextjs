@@ -4,8 +4,8 @@ import { ComponentProps, useMemo, useState } from "react";
 import { truncate } from "@/utils/address.util";
 import { useWalletManager } from "@/hooks/account.hook";
 import { useCallback } from "react";
-import { Wallets } from "@/constants/wallets.constant";
 import { useWalletConnect, useWalletDisconnect } from "@/hooks/wallet.hook";
+import { Wallets, getWalletsMetadata } from "@/wallets/index.wallet";
 
 const { useToken } = theme;
 
@@ -86,7 +86,7 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
             onCancel={handleSelectWalletModalClose}
           >
             <Row gutter={[16, 16]}>
-              {Wallets.map((item) => (
+              {getWalletsMetadata().map((item) => (
                 <Col key={`wallet-${item.id}`} span={24}>
                   <Button
                     onClick={() => handleConnect(item)}
