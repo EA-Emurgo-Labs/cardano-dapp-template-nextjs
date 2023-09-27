@@ -12,23 +12,26 @@ export function useWalletConnect(): [Object, (wallet: Object) => void] {
   );
 
   const connectWallet = useCallback(async (item: any) => {
-    try {
-      const connector = item.getConnector();
-      if (!connector) {
-        return window.open(item.extensionLink);
-      }
-      const api = await connector.enable();
-      const lucid = await Lucid.new();
-      lucid.selectWallet(api);
-      console.log("network: ", lucid.getNetworkId())
-      const address = await lucid.wallet.address();
+    const connector = item.getConnector();
+    console.log("connectWallet: ", item);
+    if (!connector) {
+      return window.open(item.extensionLink);
+    }
+    const api = await connector.enable();
+    const lucid = await Lucid.new();
+    lucid.selectWallet(api);
 
-      dispatch(AccountActions.updateWallet({ wallet: {
-        address,
-        selected: item,
+    console.log("network: ", await api.getNetworkId());
+    const address = await lucid.wallet.address();
 
-      } }));
-    } catch (error) {}
+    dispatch(
+      AccountActions.updateWallet({
+        wallet: {
+          address,
+          selected: item,
+        },
+      })
+    );
   }, []);
 
   return [wallet, connectWallet];

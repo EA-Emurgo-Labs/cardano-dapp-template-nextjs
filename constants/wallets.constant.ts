@@ -1,4 +1,5 @@
-import NamiIcon from '@/components/icons/nami.icon'
+import { NamiIcon } from "@/components/icons/nami.icon";
+import { LaceIcon } from "@/components/icons/lace.icon";
 
 export enum WalletState {
   NOT_CONNECTED,
@@ -7,14 +8,21 @@ export enum WalletState {
 }
 
 export const Nami = {
-  id: 'Nami',
+  id: "Nami",
   getConnector: () => window.cardano?.nami,
-  name: 'Nami',
+  name: "Nami",
   extensionLink:
-    'https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo?hl=en',
-  icon: NamiIcon
-});
+    "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo?hl=en",
+  icon: NamiIcon,
+};
 
-export default [
-  Nami
-];
+export const Lace = {
+  id: "Lace",
+  getConnector: () => window.cardano?.lace,
+  name: "Lace",
+  extensionLink:
+    "https://chrome.google.com/webstore/detail/lace/gafhhkghbfjjkeiendhlofajokpaflmk",
+  icon: LaceIcon,
+};
+
+export const Wallets = [Nami, Lace];

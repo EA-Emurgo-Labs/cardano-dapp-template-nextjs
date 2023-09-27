@@ -31,6 +31,11 @@ const theme: ThemeConfig = {
       colorText: Colors.gray.gray7,
       colorTextDescription: Colors.gray.gray8,
     },
+    Modal: {
+      colorTextBase: Colors.gray.gray9,
+      contentBg: "#ffffff",
+      headerBg: "#ffffff",
+    },
     Exchange: {
       Card: {
         boxShadow: "0px 3px 6px -4px rgba(0, 0, 0, 0.12)",

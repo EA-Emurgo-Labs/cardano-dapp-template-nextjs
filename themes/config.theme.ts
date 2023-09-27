@@ -27,6 +27,9 @@ const defaultConfig: ThemeConfig = {
     Button: {
       paddingContentHorizontal: 25,
     },
+    Modal: {
+      titleFontSize: 20,
+    },
     Tabs: {
       horizontalItemPadding: '16px 0 18px 0',
       titleFontSize: 16,
