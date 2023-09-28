@@ -1,6 +1,8 @@
 import { LaceIcon } from "@/components/icons/lace.icon";
 import BaseWallet from "./base.wallet";
 
+let events = [];
+
 class LaceWallet extends BaseWallet {
   constructor() {
     super({
@@ -12,7 +14,10 @@ class LaceWallet extends BaseWallet {
     });
   }
 
-  subscribeEvents() {
+  async subscribeEvents() {
+    return true;
+  }
+  async unsubscribeEvents() {
     return true;
   }
 }

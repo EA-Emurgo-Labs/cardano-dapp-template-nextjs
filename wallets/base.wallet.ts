@@ -11,15 +11,27 @@ class BaseWallet {
     this.name = _params.name;
   }
   async enable() {
-    return this.api = await this.provider.enable();
+    return (this.api = await this.provider.enable());
   }
 
   async isEnabled() {
     return await this.provider.isEnabled();
   }
 
+  async getApi() {
+    if (this.api) {
+      return this.api;
+    }
+
+    if (await this.isEnabled()) {
+      return await this.enable();
+    }
+
+    return null;
+  }
   async getNetworkId() {
-    return await this.api.getNetworkId();
+    const api = await this.getApi();
+    return await api.getNetworkId();
   }
 
   getMetadata() {

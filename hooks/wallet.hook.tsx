@@ -15,12 +15,19 @@ export function useWalletConnect(): [(wallet: Object) => void] {
       return window.open(item.extensionLink);
     }
     const api = await wallet.enable();
+
     const networkId = await wallet.getNetworkId();
 
     const lucid = await Lucid.new();
     lucid.selectWallet(api);
 
     const address = await lucid.wallet.address();
+
+    wallet.subscribeEvents({
+      dispatch,
+      lucid,
+      api,
+    });
 
     dispatch(
       AccountActions.connectWallet({
@@ -39,9 +46,48 @@ export function useWalletConnect(): [(wallet: Object) => void] {
 export function useWalletDisconnect(): [(wallet: Object) => void] {
   const dispatch = useDispatch();
 
+  const wallet = useSelector<AppState, AppState["account"]["wallet"]>(
+    (state) => state.account.wallet
+  );
+
   const disconnectWallet = useCallback(() => {
     dispatch(AccountActions.disconnectWallet());
-  }, []);
+    const _wallet = new Wallets[wallet.metadata.id]();
+    _wallet.unsubscribeEvents();
+  }, [wallet]);
 
   return [disconnectWallet];
+}
+
+export function useWalletBalance(): [(wallet: Object) => void] {
+  const dispatch = useDispatch();
+  const wallet = useSelector<AppState, AppState["account"]["wallet"]>(
+    (state) => state.account.wallet
+  );
+
+  const getWalletBalance = useCallback(async () => {
+    if (wallet && wallet.address) {
+      const _wallet = new Wallets[wallet.metadata.id]();
+      const api = await _wallet.getApi();
+
+      const lucid = await Lucid.new();
+      lucid.selectWallet(api);
+
+      const utxos = await lucid.wallet.getUtxos();
+      const lovelace = utxos.reduce(
+        (amount, utxo) => amount + utxo.assets.lovelace,
+        0n
+      );
+
+      dispatch(
+        AccountActions.updateWallet({
+          wallet: {
+            balance: lovelace.toString(),
+          },
+        })
+      );
+    }
+  }, []);
+
+  return [wallet.balance, getWalletBalance];
 }

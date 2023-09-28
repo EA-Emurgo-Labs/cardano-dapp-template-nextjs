@@ -1,10 +1,14 @@
 import { message, Row, Col, Modal, Button, theme } from "antd";
 import { twMerge } from "tailwind-merge";
-import { ComponentProps, useMemo, useState } from "react";
+import { ComponentProps, useEffect, useMemo, useState } from "react";
 import { truncate } from "@/utils/address.util";
 import { useWalletManager } from "@/hooks/account.hook";
 import { useCallback } from "react";
-import { useWalletConnect, useWalletDisconnect } from "@/hooks/wallet.hook";
+import {
+  useWalletBalance,
+  useWalletConnect,
+  useWalletDisconnect,
+} from "@/hooks/wallet.hook";
 import { Wallets, getWalletsMetadata } from "@/wallets/index.wallet";
 
 const { useToken } = theme;
@@ -12,12 +16,13 @@ const { useToken } = theme;
 export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
   const { token } = useToken();
   const [messageApi, contextHolder] = message.useMessage();
-  const [wallet, updateWallet] = useWalletManager();
+  const [wallet] = useWalletManager();
   const [connectWallet] = useWalletConnect();
   const [disconnectWallet] = useWalletDisconnect();
   const [selcectWalletModal, updateSelectWalletModal] = useState({
     open: false,
   });
+  const [balance, getWalletBalance] = useWalletBalance();
 
   const [loading, setLoading] = useState("");
 
@@ -36,7 +41,11 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
   }, []);
 
   const handleDisconnect = useCallback(() => {
-    disconnectWallet();
+    try {
+      disconnectWallet();
+    } catch (error) {
+      messageApi.error(error?.info || error?.message || error);
+    }
   }, []);
 
   const wrappedClassName = useMemo(() => {
@@ -62,6 +71,10 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
 
   const handleSelectWalletModalClose = useCallback(() => {
     updateSelectWalletModal({ open: false });
+  }, []);
+
+  useEffect(() => {
+    getWalletBalance();
   }, []);
 
   if (!wallet.address) {
@@ -118,20 +131,23 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
   }
 
   return (
-    <div className={wrappedClassName} style={wrappedStyle}>
-      <span className="font-semibold inline-block mr-1.5">Wallet:</span>
-      <span style={{ color: token.colorTextTertiary }}>
-        {truncate(wallet.address)}
-      </span>
-      <Button
-        onClick={handleDisconnect}
-        type="primary"
-        ghost
-        className="ml-3"
-        size="small"
-      >
-        Disconnect
-      </Button>
-    </div>
+    <>
+      {contextHolder}
+      <div className={wrappedClassName} style={wrappedStyle}>
+        <span className="font-semibold inline-block mr-1.5">Wallet:</span>
+        <span style={{ color: token.colorTextTertiary }}>
+          {truncate(wallet.address)}
+        </span>
+        <Button
+          onClick={handleDisconnect}
+          type="primary"
+          ghost
+          className="ml-3"
+          size="small"
+        >
+          Disconnect
+        </Button>
+      </div>
+    </>
   );
 };

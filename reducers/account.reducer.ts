@@ -11,7 +11,8 @@ export const initialState: AccountState = {
   auth: {},
   wallet: {
     networkId: "",
-    provider: "",
+    api: null,
+    metadata: "",
     balance: "",
     address: "",
   },

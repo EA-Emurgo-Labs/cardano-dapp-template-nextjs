@@ -15,5 +15,9 @@ class FlintWallet extends BaseWallet {
   subscribeEvents() {
     return true;
   }
+
+  unsubscribeEvents() {
+    return true;
+  }
 }
 export default FlintWallet;
