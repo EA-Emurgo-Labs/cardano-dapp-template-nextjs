@@ -18,6 +18,10 @@ class NamiWallet extends BaseWallet {
   }
 
   async subscribeEvents({ dispatch }) {
+    if(events.length > 0) {
+      return;
+    }
+
     const api = await this.getApi();
 
     events.push({

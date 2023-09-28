@@ -74,8 +74,10 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
   }, []);
 
   useEffect(() => {
-    getWalletBalance();
-  }, []);
+    if (wallet && wallet.address) {
+      connectWallet(wallet.metadata);
+    }
+  }, [wallet.address]);
 
   if (!wallet.address) {
     return (
