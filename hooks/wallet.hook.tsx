@@ -51,10 +51,12 @@ export function useWalletDisconnect(): [(wallet: Object) => void] {
   );
 
   const disconnectWallet = useCallback(() => {
-    dispatch(AccountActions.disconnectWallet());
-    const _wallet = new Wallets[wallet.metadata.id]();
-    _wallet.unsubscribeEvents();
-  }, [wallet]);
+    if (wallet.address) {
+      const _wallet = new Wallets[wallet.metadata.id]();
+      _wallet.unsubscribeEvents();
+      dispatch(AccountActions.disconnectWallet());
+    }
+  }, [wallet.address]);
 
   return [disconnectWallet];
 }

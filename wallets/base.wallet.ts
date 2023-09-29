@@ -39,7 +39,7 @@ class BaseWallet {
       icon: this.icon,
       name: this.name,
       extensionLink: this.extensionLink,
-      apiVersion: this.provider.apiVersion,
+      apiVersion: this.provider?.apiVersion,
     };
   }
 }
