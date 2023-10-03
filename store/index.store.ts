@@ -29,7 +29,7 @@ const makeStore = ({ isServer }) => {
 
     const persistConfig = {
       timeout: 1000,
-      key: "changeblock",
+      key: "changeblock-demo-ui",
       whitelist: ["account"],
       storage,
     };

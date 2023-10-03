@@ -1,4 +1,4 @@
-import { message, Row, Col, Modal, Button, theme } from "antd";
+import { Typography, message, Row, Col, Modal, Button, theme } from "antd";
 import { twMerge } from "tailwind-merge";
 import { ComponentProps, useEffect, useMemo, useState } from "react";
 import { truncate } from "@/utils/address.util";
@@ -10,6 +10,8 @@ import {
   useWalletDisconnect,
 } from "@/hooks/wallet.hook";
 import { Wallets, getWalletsMetadata } from "@/wallets/index.wallet";
+
+const { Text } = Typography;
 
 const { useToken } = theme;
 
@@ -84,9 +86,9 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
       <>
         {contextHolder}
         <div className={wrappedClassName} style={wrappedStyle}>
-          <span className="font-semibold hidden sm:block">
+          <Text className="font-semibold hidden sm:block">
             Connect to your wallet:
-          </span>
+          </Text>
           <Button
             onClick={handleConnectBtnClick}
             type="primary"
@@ -136,10 +138,10 @@ export const WalletConnect = ({ style, className }: ComponentProps<{}>) => {
     <>
       {contextHolder}
       <div className={wrappedClassName} style={wrappedStyle}>
-        <span className="font-semibold inline-block mr-1.5">Wallet:</span>
-        <span style={{ color: token.colorTextTertiary }}>
+        <Text className="font-semibold inline-block mr-1.5">Wallet:</Text>
+        <Text style={{ color: token.colorTextTertiary }}>
           {truncate(wallet.address)}
-        </span>
+        </Text>
         <Button
           onClick={handleDisconnect}
           type="primary"

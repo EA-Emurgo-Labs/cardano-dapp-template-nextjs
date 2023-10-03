@@ -4,6 +4,11 @@ const colors = {
     main5: "#33D1A1",
     main6: "#00C689",
   },
+  GeekBlue: {
+    geekblue1: "#F0F5FF",
+    geekblue5: "#597EF7",
+    geekblue6: "#2F54EB",
+  },
   extra: {
     bg1: '#F0F2F5'
   },

@@ -1,24 +1,14 @@
-import { useEffect, PropsWithChildren, useState, useCallback } from "react";
+import { PropsWithChildren, useState, useCallback } from "react";
 import { theme, Button } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Siderbar } from "@/components/siderbar.component";
-import { useProfileManager } from "@/hooks/account.hook";
-import { useRouter } from "next/navigation";
 import { useSiderbarManager } from "@/hooks/global.hook";
 
 const { useToken } = theme;
 
 export const MainLayout = ({ children }: PropsWithChildren<{}>) => {
   const { token } = useToken();
-  const [profile] = useProfileManager();
-  const router = useRouter();
   const [siderbar, updateSiderbar] = useSiderbarManager();
-
-  useEffect(() => {
-    if (!profile.email) {
-      return router.push("/signin");
-    }
-  }, [profile]);
 
   const handleSiderbarCollapsed = useCallback(() => {
     updateSiderbar({

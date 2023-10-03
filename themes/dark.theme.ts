@@ -1,26 +1,23 @@
 import type { ThemeConfig } from "antd";
+import { theme } from "antd";
 import Colors from "@/constants/colors.constant";
 
-const theme: ThemeConfig = {
+const DarkTheme: ThemeConfig = {
+  algorithm: theme.darkAlgorithm,
   token: {
     colorPrimary: Colors.GeekBlue.geekblue6,
     colorLink: Colors.GeekBlue.geekblue6,
-    colorTextBase: Colors.gray.gray9,
-    colorTextTertiary: Colors.gray.gray8,
-    colorBgLayout: Colors.extra.bg1,
+    colorTextBase: "#fff",
+    colorTextTertiary: Colors.gray.gray3,
+    colorBgLayout: Colors.gray.gray9,
     colorBgElevated: Colors.GeekBlue.geekblue5,
   },
   components: {
     Input: {
       colorText: Colors.gray.gray7,
     },
-    Menu: {
-      itemSelectedBg: Colors.GeekBlue.geekblue1,
-      boxShadow: "-1px 0px 0px 0px #F0F0F0 inset",
-      itemSelectedBoxShadow: "-3px 0px 0px 0px #0400C6 inset",
-    },
+    Menu: {},
     Logout: {
-      colorBgContainer: Colors.gray.gray2,
       colorBorder: Colors.gray.gray4,
     },
     Card: {
@@ -47,4 +44,4 @@ const theme: ThemeConfig = {
   },
 };
 
-export default theme;
+export default DarkTheme;

@@ -1,5 +1,6 @@
 import type { ThemeConfig } from "antd";
 import LightTheme from "./light.theme";
+import DarkTheme from "./dark.theme";
 import { merge } from "@/utils/object.util";
 
 const defaultConfig: ThemeConfig = {
@@ -40,9 +41,10 @@ const defaultConfig: ThemeConfig = {
 export default (name) => {
   const themes = {
     light: LightTheme,
+    dark: DarkTheme
   };
 
-  const theme = themes[name || "light"];
+  const theme = themes[name || "dark"];
 
   return merge(defaultConfig, theme);
 };

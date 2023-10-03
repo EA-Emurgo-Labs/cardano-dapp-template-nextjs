@@ -1,25 +1,23 @@
 import React, { useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import { CreditCardOutlined } from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { theme, Button, Menu, Avatar, Space } from "antd";
-import Logo from "assets/logo.png";
-import { CoinOutlinedIcon } from "@/components/icons/coin-outlined.icon";
+import { Typography, theme, Button, Switch, Menu, Avatar, Space } from "antd";
 import { LogoutOutlinedIcon } from "@/components/icons/logout-outlined.icon";
 import { useProfileManager, useAccountLogout } from "@/hooks/account.hook";
 import { useSiderbarManager } from "@/hooks/global.hook";
+const { Text } = Typography;
 
 const { useToken } = theme;
 const IconsMap = {
-  CreditCardOutlined: CreditCardOutlined,
-  CoinOutlinedIcon: CoinOutlinedIcon,
+  HomeOutlined: HomeOutlined,
 };
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 function getItem(
+  key: string,
   label: string,
   icon?: string,
   children?: MenuItem[],
@@ -27,7 +25,7 @@ function getItem(
 ): MenuItem {
   const IconNode = IconsMap[icon];
   return {
-    key: `/${label.toLowerCase()}`,
+    key: key,
     icon: <IconNode />,
     children,
     label: <span className="text-sm">{label}</span>,
@@ -49,10 +47,7 @@ export const Siderbar = () => {
     router.push(item.key);
   }, []);
 
-  const items: MenuItem[] = [
-    getItem("Tokenize", "CoinOutlinedIcon"),
-    getItem("Exchange", "CreditCardOutlined"),
-  ];
+  const items: MenuItem[] = [getItem("/", "Home", "HomeOutlined")];
 
   const handleLogout = useCallback(() => {
     logout();
@@ -60,6 +55,8 @@ export const Siderbar = () => {
       collapsed: false,
     });
   }, []);
+
+  const handleThemeChange = useCallback(() => {}, []);
 
   return (
     <div
@@ -76,7 +73,17 @@ export const Siderbar = () => {
         className="flex justify-center items-center"
         style={{ height: 60 }}
       >
-        <Image src={Logo} alt="Logo" width={185} />
+        <span
+          className="inline-block text-center font-semibold text-2xl"
+          style={{
+            height: 34,
+            width: 185,
+            backgroundColor: token.colorPrimary,
+            color: "white",
+          }}
+        >
+          DEMO UI
+        </span>
       </Link>
       <Menu
         onClick={handleItemClick}
@@ -84,34 +91,40 @@ export const Siderbar = () => {
         mode="inline"
         items={items}
       />
-      <div
-        className="flex border-t border-solid  justify-between px-4 py-2 w-full absolute bottom-0"
-        style={{
-          backgroundColor: token.Logout.colorBgContainer,
-          borderColor: token.Logout.colorBorder,
-        }}
-      >
-        <Space>
-          <Avatar
-            style={{
-              backgroundColor: token.colorBgElevated,
-            }}
-          >
-            <span className="text-xs">AU</span>
-          </Avatar>
-          <span>Admin</span>
-        </Space>
-        <Button
-          onClick={handleLogout}
-          type="text"
-          size="small"
+      <div className="px-4 w-full absolute bottom-0">
+        <div className="mb-4">
+          <Switch defaultChecked onChange={handleThemeChange} />
+          <Text className="ml-2.5 inline-block">Dark mode</Text>
+        </div>
+        <div
+          className="flex border-t border-solid  justify-between py-2 w-full"
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
+            backgroundColor: token.Logout.colorBgContainer,
+            borderColor: token.Logout.colorBorder,
           }}
-          icon={<LogoutOutlinedIcon />}
-        ></Button>
+        >
+          <Space>
+            <Avatar
+              style={{
+                backgroundColor: token.colorBgElevated,
+              }}
+            >
+              <span className="text-xs">AU</span>
+            </Avatar>
+            <Text>Admin</Text>
+          </Space>
+          <Button
+            onClick={handleLogout}
+            type="text"
+            size="small"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
+            icon={<LogoutOutlinedIcon />}
+          ></Button>
+        </div>
       </div>
       <style jsx global>{`
         .ant-menu-item-selected {
