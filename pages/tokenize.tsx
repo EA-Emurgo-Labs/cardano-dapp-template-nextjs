@@ -81,6 +81,7 @@ export default function TokenizePage() {
       setLoading(true);
       return;
     }
+
     if (info.file.status === "done") {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj as RcFile, (url) => {
@@ -123,7 +124,6 @@ export default function TokenizePage() {
                   listType="picture-card"
                   style={{ width: 104, height: 104, borderRadius: 2 }}
                   showUploadList={false}
-                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                   beforeUpload={beforeUpload}
                   onChange={handleChange}
                 >
@@ -154,7 +154,7 @@ export default function TokenizePage() {
                 }}
               >
                 <div className="flex flex-col justify-between h-full">
-                  <Upload>
+                  <Upload maxCount={1}>
                     <Button icon={<UploadOutlined />}>IFPS Upload</Button>
                   </Upload>
                   <div
@@ -169,10 +169,7 @@ export default function TokenizePage() {
           </Row>
           <Row gutter={22} className="mt-7">
             <Col span="24" sm={10}>
-              <Form.Item
-                label="Sell Price"
-                name="price"
-              >
+              <Form.Item label="Sell Price" name="price">
                 <InputNumber
                   style={{ width: "100%" }}
                   placeholder="Your price"
