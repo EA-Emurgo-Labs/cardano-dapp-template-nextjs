@@ -12,6 +12,7 @@ const defaultConfig: ThemeConfig = {
   components: {
     Form: {
       fontSize: 14,
+      itemMarginBottom: 12
     },
     Menu: {
       itemMarginInline: 0,
@@ -44,7 +45,7 @@ export default (name) => {
     dark: DarkTheme
   };
 
-  const theme = themes[name || "dark"];
+  const theme = themes[name || "light"];
 
   return merge(defaultConfig, theme);
 };

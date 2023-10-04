@@ -4,19 +4,23 @@ import {
   Card,
   Form,
   InputNumber,
+  Select,
   Upload,
   Button,
   theme,
   Col,
+  Divider,
   Row,
   Space,
   message,
+  Typography,
 } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { MainLayout } from "@/layouts/main.layout";
 import { useWalletManager } from "@/hooks/account.hook";
 import { WalletConnect } from "@/components/wallet-connect.component";
+const { Text } = Typography;
 
 const { useToken } = theme;
 
@@ -155,7 +159,14 @@ export default function TokenizePage() {
               >
                 <div className="flex flex-col justify-between h-full">
                   <Upload maxCount={1}>
-                    <Button icon={<UploadOutlined />}>IFPS Upload</Button>
+                    <Button
+                      style={{
+                        backgroundColor: token.Upload.colorFillAlter,
+                      }}
+                      icon={<UploadOutlined />}
+                    >
+                      IFPS Upload
+                    </Button>
                   </Upload>
                   <div
                     className="absolute bottom-6"
@@ -167,19 +178,71 @@ export default function TokenizePage() {
               </ICard>
             </Col>
           </Row>
-          <Row gutter={22} className="mt-7">
-            <Col span="24" sm={10}>
-              <Form.Item label="Sell Price" name="price">
-                <InputNumber
-                  style={{ width: "100%" }}
-                  placeholder="Your price"
-                />
-              </Form.Item>
-            </Col>
-            <Col span="24" sm={14}>
-              <Button block type="primary" htmlType="submit">
-                Mint token
-              </Button>
+          <Row className="mt-7">
+            <Col span="24">
+              <ICard
+                token={token}
+                account={wallet.address}
+                step={{
+                  no: 3,
+                  title: "Setup token",
+                }}
+              >
+                <Row gutter={20} className="mt-7">
+                  <Col span="24" sm={13}>
+                    <Form.Item>
+                      <Select
+                        defaultValue=""
+                        className="w-full"
+                        options={[
+                          { value: "", label: "Select Token" },
+                          { value: "token-a", label: "Token A" },
+                          { value: "token-b", label: "Token B" },
+                        ]}
+                      />
+                    </Form.Item>
+                    <Form.Item label="Token A" name="token-a">
+                      <InputNumber
+                        style={{ width: "100%" }}
+                        placeholder="Enter amount"
+                      />
+                    </Form.Item>
+                    <Form.Item label="Token B" name="token-b">
+                      <InputNumber
+                        style={{ width: "100%" }}
+                        placeholder="Enter amount"
+                      />
+                    </Form.Item>
+                    <Button block type="primary" htmlType="submit">
+                      Action
+                    </Button>
+                  </Col>
+                  <Col span="24" sm={1}>
+                    <Divider type="vertical" className="min-h-full" />
+                  </Col>
+                  <Col span="24" sm={10}>
+                    <div className="flex flex-col relative min-h-full">
+                      <Text>
+                        <span className="text-2xl font-semibold">Title</span>
+                      </Text>
+                      <Text
+                        className="inline-block mt-1.5"
+                        style={{
+                          color: token.colorTextTertiary,
+                        }}
+                      >
+                        Description
+                      </Text>
+
+                      <div className="absolute bottom-0 right-0 w-1/2">
+                        <Button block type="primary" htmlType="submit">
+                          Action
+                        </Button>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </ICard>
             </Col>
           </Row>
         </Form>

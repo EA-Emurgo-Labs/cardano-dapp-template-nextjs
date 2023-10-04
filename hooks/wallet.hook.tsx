@@ -3,7 +3,7 @@ import { Lucid } from "lucid-cardano";
 import { AppState } from "@/reducers/index";
 import { useCallback } from "react";
 import { Wallets } from "@/wallets/index.wallet";
-
+import Networks from '@/constants/network.constant'
 import * as AccountActions from "@/actions/account.action";
 
 export function useWalletConnect(): [(wallet: Object) => void] {
@@ -17,6 +17,11 @@ export function useWalletConnect(): [(wallet: Object) => void] {
     const api = await wallet.enable();
 
     const networkId = await wallet.getNetworkId();
+    if (networkId != process.env.NEXT_PUBLIC_NETWORK_ID) {
+      throw new Error(
+        `Set network to "${Networks[process.env.NEXT_PUBLIC_NETWORK_ID]}" in your ${item.id} wallet to use`
+      );
+    }
 
     const lucid = await Lucid.new();
     lucid.selectWallet(api);
