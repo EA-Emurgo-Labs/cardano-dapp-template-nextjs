@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import {
   Card,
@@ -6,8 +6,8 @@ import {
   InputNumber,
   Select,
   Upload,
+  ConfigProvider,
   Button,
-  theme,
   Col,
   Divider,
   Row,
@@ -21,15 +21,15 @@ import { MainLayout } from "@/layouts/main.layout";
 import { useWalletManager } from "@/hooks/account.hook";
 import { WalletConnect } from "@/components/wallet-connect.component";
 const { Text } = Typography;
-
-const { useToken } = theme;
+import getTheme from "@/themes/config.theme";
+import { useThemeManager } from "@/hooks/global.hook";
 
 const ICard = ({ children, token, step, style, account }) => {
   return (
     <Card
       style={Object.assign(
         {
-          boxShadow: token.Card.boxShadow,
+          boxShadow: token.Card?.boxShadow,
           opacity: !account ? 0.3 : 1,
           minHeight: 240,
         },
@@ -72,11 +72,15 @@ const beforeUpload = (file: RcFile) => {
 };
 
 export default function TokenizePage() {
-  const { token } = useToken();
-
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   const [wallet] = useWalletManager();
+  const [theme] = useThemeManager();
+
+  const themeConfig = useMemo(() => getTheme(theme), [theme]);
+  const token = useMemo(() => {
+    return Object.assign({}, themeConfig.token, themeConfig.components);
+  }, [themeConfig, theme]);
 
   const handleChange: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
@@ -102,151 +106,152 @@ export default function TokenizePage() {
       ) : (
         <UploadOutlined style={{ fontSize: 32 }} />
       )}
-      <div style={{ marginTop: 6, color: token.Upload.colorTextDescription }}>
+      <div style={{ marginTop: 6, color: token.Upload?.colorTextDescription }}>
         Upload
       </div>
     </div>
   );
 
   return (
-    <MainLayout>
-      <WalletConnect />
-      <div className="mt-2 pt-16">
-        <Form name="mint-token" disabled={!wallet.address}>
-          <Row gutter={[22, 22]}>
-            <Col span="24" sm={12}>
-              <ICard
-                token={token}
-                account={wallet.address}
-                step={{
-                  no: 1,
-                  title: "Upload your file",
-                }}
-              >
-                <Upload
-                  name="avatar"
-                  listType="picture-card"
-                  style={{ width: 104, height: 104, borderRadius: 2 }}
-                  showUploadList={false}
-                  beforeUpload={beforeUpload}
-                  onChange={handleChange}
+      <MainLayout>
+        <WalletConnect />
+        <div className="mt-2 pt-16">
+          <Form name="mint-token" disabled={!wallet.address}>
+            <Row gutter={[22, 22]}>
+              <Col span="24" sm={12}>
+                <ICard
+                  token={token}
+                  account={wallet.address}
+                  step={{
+                    no: 1,
+                    title: "Upload your file",
+                  }}
                 >
-                  {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt="avatar"
-                      style={{ width: "100%" }}
-                    />
-                  ) : (
-                    uploadButton
-                  )}
-                  <style jsx>{`
-                    .ant-upload-select {
-                      border-radius: 2px;
-                    }
-                  `}</style>
-                </Upload>
-              </ICard>
-            </Col>
-            <Col span="24" sm={12}>
-              <ICard
-                token={token}
-                account={wallet.address}
-                step={{
-                  no: 2,
-                  title: "Upload IPFS",
-                }}
-              >
-                <div className="flex flex-col justify-between h-full">
-                  <Upload maxCount={1}>
-                    <Button
-                      style={{
-                        backgroundColor: token.Upload.colorFillAlter,
-                      }}
-                      icon={<UploadOutlined />}
-                    >
-                      IFPS Upload
-                    </Button>
-                  </Upload>
-                  <div
-                    className="absolute bottom-6"
-                    style={{ color: token.colorTextTertiary }}
+                  <Upload
+                    name="avatar"
+                    listType="picture-card"
+                    style={{ width: 104, height: 104, borderRadius: 2 }}
+                    showUploadList={false}
+                    beforeUpload={beforeUpload}
+                    onChange={handleChange}
                   >
-                    <span className="font-semibold">CID:</span>--
-                  </div>
-                </div>
-              </ICard>
-            </Col>
-          </Row>
-          <Row className="mt-7">
-            <Col span="24">
-              <ICard
-                token={token}
-                account={wallet.address}
-                step={{
-                  no: 3,
-                  title: "Setup token",
-                }}
-              >
-                <Row gutter={20} className="mt-7">
-                  <Col span="24" sm={13}>
-                    <Form.Item>
-                      <Select
-                        defaultValue=""
-                        className="w-full"
-                        options={[
-                          { value: "", label: "Select Token" },
-                          { value: "token-a", label: "Token A" },
-                          { value: "token-b", label: "Token B" },
-                        ]}
-                      />
-                    </Form.Item>
-                    <Form.Item label="Token A" name="token-a">
-                      <InputNumber
+                    {imageUrl ? (
+                      <img
+                        src={imageUrl}
+                        alt="avatar"
                         style={{ width: "100%" }}
-                        placeholder="Enter amount"
                       />
-                    </Form.Item>
-                    <Form.Item label="Token B" name="token-b">
-                      <InputNumber
-                        style={{ width: "100%" }}
-                        placeholder="Enter amount"
-                      />
-                    </Form.Item>
-                    <Button block type="primary" htmlType="submit">
-                      Action
-                    </Button>
-                  </Col>
-                  <Col span="24" sm={1}>
-                    <Divider type="vertical" className="min-h-full" />
-                  </Col>
-                  <Col span="24" sm={10}>
-                    <div className="flex flex-col relative min-h-full">
-                      <Text>
-                        <span className="text-2xl font-semibold">Title</span>
-                      </Text>
-                      <Text
-                        className="inline-block mt-1.5"
+                    ) : (
+                      uploadButton
+                    )}
+                    <style jsx>{`
+                      .ant-upload-select {
+                        border-radius: 2px;
+                      }
+                    `}</style>
+                  </Upload>
+                </ICard>
+              </Col>
+              <Col span="24" sm={12}>
+                <ICard
+                  token={token}
+                  account={wallet.address}
+                  step={{
+                    no: 2,
+                    title: "Upload IPFS",
+                  }}
+                >
+                  <div className="flex flex-col justify-between h-full">
+                    <Upload maxCount={1}>
+                      <Button
                         style={{
-                          color: token.colorTextTertiary,
+                          backgroundColor: token.Upload?.colorBgButton,
+                          borderColor: token.Upload?.colorBorderButton
                         }}
+                        icon={<UploadOutlined />}
                       >
-                        Description
-                      </Text>
-
-                      <div className="absolute bottom-0 right-0 w-1/2">
-                        <Button block type="primary" htmlType="submit">
-                          Action
-                        </Button>
-                      </div>
+                        IFPS Upload
+                      </Button>
+                    </Upload>
+                    <div
+                      className="absolute bottom-6"
+                      style={{ color: token.colorTextTertiary }}
+                    >
+                      <span className="font-semibold">CID:</span>--
                     </div>
-                  </Col>
-                </Row>
-              </ICard>
-            </Col>
-          </Row>
-        </Form>
-      </div>
-    </MainLayout>
+                  </div>
+                </ICard>
+              </Col>
+            </Row>
+            <Row className="mt-7">
+              <Col span="24">
+                <ICard
+                  token={token}
+                  account={wallet.address}
+                  step={{
+                    no: 3,
+                    title: "Setup token",
+                  }}
+                >
+                  <Row gutter={20} className="mt-7">
+                    <Col span="24" sm={13}>
+                      <Form.Item>
+                        <Select
+                          defaultValue=""
+                          className="w-full"
+                          options={[
+                            { value: "", label: "Select Token" },
+                            { value: "token-a", label: "Token A" },
+                            { value: "token-b", label: "Token B" },
+                          ]}
+                        />
+                      </Form.Item>
+                      <Form.Item label="Token A" name="token-a">
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          placeholder="Enter amount"
+                        />
+                      </Form.Item>
+                      <Form.Item label="Token B" name="token-b">
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          placeholder="Enter amount"
+                        />
+                      </Form.Item>
+                      <Button block type="primary" htmlType="submit">
+                        Action
+                      </Button>
+                    </Col>
+                    <Col span="24" sm={1}>
+                      <Divider type="vertical" className="min-h-full" />
+                    </Col>
+                    <Col span="24" sm={10}>
+                      <div className="flex flex-col relative min-h-full">
+                        <Text>
+                          <span className="text-2xl font-semibold">Title</span>
+                        </Text>
+                        <Text
+                          className="inline-block mt-1.5"
+                          style={{
+                            color: token.colorTextTertiary,
+                          }}
+                        >
+                          Description
+                        </Text>
+
+                        <div className="absolute bottom-0 right-0 w-1/2">
+                          <Button block type="primary" htmlType="submit">
+                            Action
+                          </Button>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                </ICard>
+              </Col>
+            </Row>
+          </Form>
+        </div>
+      </MainLayout>
   );
 }

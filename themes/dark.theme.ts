@@ -8,6 +8,7 @@ const DarkTheme: ThemeConfig = {
     colorPrimary: Colors.GeekBlue.geekblue6,
     colorLink: Colors.GeekBlue.geekblue6,
     colorTextTertiary: Colors.gray.gray3,
+    colorTextPlaceholder: Colors.gray.gray7,
     colorText: "#fff",
     colorBgLayout: Colors.gray.gray9,
     colorBgElevated: Colors.GeekBlue.geekblue5,
@@ -19,10 +20,13 @@ const DarkTheme: ThemeConfig = {
     },
     Menu: {
       itemSelectedBg: Colors.GeekBlue.geekblue6,
-      itemSelectedColor: 'white'
+      itemSelectedColor: 'white',
+      boxShadow: "",
+      itemSelectedBoxShadow: "",
     },
     Logout: {
-      colorBorder: Colors.gray.gray4,
+      colorBgContainer: '#000',
+      colorBorder: Colors.gray.gray7,
     },
     Divider: {
       colorSplit: Colors.gray.gray4
@@ -38,6 +42,8 @@ const DarkTheme: ThemeConfig = {
       colorText: 'white',
       colorBorder: Colors.gray.gray9,
       colorTextDescription: 'white',
+      colorBgButton: Colors.gray.gray7,
+      colorBorderButton: Colors.gray.gray8
     },
   },
 };

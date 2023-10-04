@@ -3,6 +3,7 @@ import { REHYDRATE } from "redux-persist";
 
 export const updateRehydrate = createAction(REHYDRATE);
 
-export const updateSidebar = createAction<{ siderbar: Object }>(
-  "global/siderbar"
-);
+export const updateSidebar =
+  createAction<{ siderbar: Object }>("global/siderbar");
+
+export const updateTheme = createAction<{ theme: string }>("global/theme");

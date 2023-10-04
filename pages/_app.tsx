@@ -21,25 +21,23 @@ function App({ Component, ...rest }: AppProps) {
   });
 
   return (
-    <ConfigProvider theme={getTheme()}>
+    <StyleProvider hashPriority="high">
       <Head>
         <title>Changeblock MVP</title>
       </Head>
-      <StyleProvider hashPriority="high">
-        <Provider store={store}>
-          <PersistGate
-            loading={
-              <div className="min-h-screen flex justify-center items-center">
-                <Spin size="large" />
-              </div>
-            }
-            persistor={persistor}
-          >
-            <Component {...props.pageProps} />
-          </PersistGate>
-        </Provider>
-      </StyleProvider>
-    </ConfigProvider>
+      <Provider store={store}>
+        <PersistGate
+          loading={
+            <div className="min-h-screen flex justify-center items-center">
+              <Spin size="large" />
+            </div>
+          }
+          persistor={persistor}
+        >
+          <Component {...props.pageProps} />
+        </PersistGate>
+      </Provider>
+    </StyleProvider>
   );
 }
 

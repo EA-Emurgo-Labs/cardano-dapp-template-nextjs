@@ -16,3 +16,16 @@ export function useSiderbarManager(): [Object, (profile: Object) => void] {
 
   return [siderbar, updateSidebar];
 }
+
+export function useThemeManager(): [Object, (profile: Object) => void] {
+  const dispatch = useDispatch();
+  const theme = useSelector<AppState, AppState["global"]["theme"]>(
+    (state) => state.global.theme
+  );
+
+  const updateTheme = useCallback((theme: any) => {
+    dispatch(GlobalActions.updateTheme({ theme }));
+  }, []);
+
+  return [theme, updateTheme];
+}

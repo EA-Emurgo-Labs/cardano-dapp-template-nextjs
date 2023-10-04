@@ -42,22 +42,22 @@ class NamiWallet extends BaseWallet {
       },
     });
 
-    events.push({
-      name: "networkChange",
-      callback: (network) => {
-        console.log(
-          "[events] networkChange of Nami wallet -> network",
-          network
-        );
-        dispatch(
-          AccountActions.updateWallet({
-            wallet: {
-              networkId: network,
-            },
-          })
-        );
-      },
-    });
+   // events.push({
+   //   name: "networkChange",
+   //   callback: (network) => {
+   //     console.log(
+   //       "[events] networkChange of Nami wallet -> network",
+   //       network
+   //     );
+   //     dispatch(
+   //       AccountActions.updateWallet({
+   //         wallet: {
+   //           networkId: network,
+   //         },
+   //       })
+   //     );
+   //   },
+   // });
 
     events.forEach((event) => {
       api.experimental.on(event.name, event.callback);

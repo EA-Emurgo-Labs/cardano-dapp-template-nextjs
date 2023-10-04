@@ -2,6 +2,7 @@ import type { ThemeConfig } from "antd";
 import LightTheme from "./light.theme";
 import DarkTheme from "./dark.theme";
 import { merge } from "@/utils/object.util";
+import { themes } from "@/themes/constant.theme";
 
 const defaultConfig: ThemeConfig = {
   token: {
@@ -12,7 +13,7 @@ const defaultConfig: ThemeConfig = {
   components: {
     Form: {
       fontSize: 14,
-      itemMarginBottom: 12
+      itemMarginBottom: 12,
     },
     Menu: {
       itemMarginInline: 0,
@@ -33,19 +34,19 @@ const defaultConfig: ThemeConfig = {
       titleFontSize: 20,
     },
     Tabs: {
-      horizontalItemPadding: '16px 0 18px 0',
+      horizontalItemPadding: "16px 0 18px 0",
       titleFontSize: 16,
-    }
+    },
   },
 };
 
 export default (name) => {
-  const themes = {
-    light: LightTheme,
-    dark: DarkTheme
+  const ThemeMap = {
+    [themes.light]: LightTheme,
+    [themes.dark]: DarkTheme,
   };
 
-  const theme = themes[name || "light"];
+  const theme = ThemeMap[name || themes.light];
 
   return merge(defaultConfig, theme);
 };

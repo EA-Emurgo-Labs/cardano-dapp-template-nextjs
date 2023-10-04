@@ -3,13 +3,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { HomeOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Typography, theme, Button, Switch, Menu, Avatar, Space } from "antd";
+import { Typography, Button, theme, Switch, Menu, Avatar, Space } from "antd";
 import { LogoutOutlinedIcon } from "@/components/icons/logout-outlined.icon";
-import { useProfileManager, useAccountLogout } from "@/hooks/account.hook";
-import { useSiderbarManager } from "@/hooks/global.hook";
-const { Text } = Typography;
+import { useAccountLogout } from "@/hooks/account.hook";
+import { useSiderbarManager, useThemeManager } from "@/hooks/global.hook";
+import { themes } from "@/themes/constant.theme";
 
+const { Text } = Typography;
 const { useToken } = theme;
+
 const IconsMap = {
   HomeOutlined: HomeOutlined,
 };
@@ -34,11 +36,11 @@ function getItem(
 }
 
 export const Siderbar = () => {
-  const { token } = useToken();
   const router = useRouter();
-  const [, updateProfile] = useProfileManager();
   const [siderbar, updateSiderbar] = useSiderbarManager();
   const [logout] = useAccountLogout();
+  const [_theme, updateTheme] = useThemeManager();
+  const { token } = useToken();
 
   const handleItemClick = useCallback((item) => {
     updateSiderbar({
@@ -56,13 +58,15 @@ export const Siderbar = () => {
     });
   }, []);
 
-  const handleThemeChange = useCallback(() => {}, []);
+  const toogleDarkTheme = useCallback(() => {
+    updateTheme(_theme == themes.dark ? themes.light : themes.dark);
+  }, [_theme]);
 
   return (
     <div
       className="fixed h-screen hidden sm:block z-10"
       style={{
-        boxShadow: token.Menu.boxShadow,
+        boxShadow: token.Menu?.boxShadow,
         backgroundColor: token.colorBgBase,
         width: 256,
         display: siderbar.collapsed ? "block" : "",
@@ -91,13 +95,13 @@ export const Siderbar = () => {
         mode="inline"
         items={items}
       />
-      <div className="px-4 w-full absolute bottom-0">
-        <div className="mb-4">
-          <Switch defaultChecked onChange={handleThemeChange} />
+      <div className="w-full absolute bottom-0">
+        <div className="mb-4 px-4">
+          <Switch checked={_theme == themes.dark} onChange={toogleDarkTheme} />
           <Text className="ml-2.5 inline-block">Dark mode</Text>
         </div>
         <div
-          className="flex border-t border-solid  justify-between py-2 w-full"
+          className="flex border-t border-solid  justify-between py-2 w-full px-4"
           style={{
             backgroundColor: token.Logout.colorBgContainer,
             borderColor: token.Logout.colorBorder,

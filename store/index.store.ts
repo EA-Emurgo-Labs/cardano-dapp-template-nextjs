@@ -1,4 +1,5 @@
 import { compose, createStore, applyMiddleware, combineReducers } from "redux";
+import { getPersistConfig } from "redux-deep-persist";
 import { persistStore } from "redux-persist";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import thunkMiddleware from "redux-thunk";
@@ -9,7 +10,7 @@ import global from "@/reducers/global.reducer";
 
 const rootReducer = combineReducers({
   account,
-  global
+  global,
 });
 
 const bindMiddleware = (middleware) => {
@@ -27,12 +28,13 @@ const makeStore = ({ isServer }) => {
   } else {
     const { persistStore, persistReducer } = require("redux-persist");
 
-    const persistConfig = {
+    const persistConfig = getPersistConfig({
       timeout: 1000,
       key: "changeblock-demo-ui",
-      whitelist: ["account"],
+      whitelist: ["account", "global.theme"],
       storage,
-    };
+      rootReducer,
+    });
 
     const persistedReducer = persistReducer(persistConfig, rootReducer); // Create a new reducer with our existing reducer
 

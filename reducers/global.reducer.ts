@@ -1,10 +1,16 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { updateRehydrate, updateSidebar } from "@/actions/global.action";
+import {
+  updateTheme,
+  updateRehydrate,
+  updateSidebar,
+} from "@/actions/global.action";
+import { themes } from "@/themes/constant.theme";
 
 export const initialState = {
   rehydrated: false,
   complete: true,
   siderbar: {},
+  theme: themes.light,
 };
 
 export default createReducer(initialState, (builder) =>
@@ -15,5 +21,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateSidebar, (state, { payload: { siderbar } }) => {
       state.siderbar = Object.assign({}, state.siderbar, siderbar);
+    })
+    .addCase(updateTheme, (state, { payload: { theme } }) => {
+      state.theme = theme;
     })
 );
