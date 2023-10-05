@@ -24,7 +24,7 @@ const LightTheme: ThemeConfig = {
       itemSelectedBoxShadow: "-3px 0px 0px 0px #0400C6 inset",
     },
     Divider: {
-      colorSplit: Colors.gray.gray4
+      colorSplit: Colors.gray.gray4,
     },
     Logout: {
       colorBgContainer: Colors.gray.gray2,
@@ -38,8 +38,13 @@ const LightTheme: ThemeConfig = {
       colorText: Colors.gray.gray7,
       colorBorder: Colors.gray.gray5,
       colorTextDescription: Colors.gray.gray8,
-      colorBgButton: '#fff',
-      colorBorderButton: Colors.gray.gray5
+      colorBgButton: "#fff",
+      colorBorderButton: Colors.gray.gray5,
+    },
+    Button: {
+      colorBgContainerDisabled: Colors.GeekBlue.geekblue6,
+      colorTextDisabled: 'white',
+      borderColorDisabled: ""
     },
     Modal: {
       colorTextBase: Colors.gray.gray9,

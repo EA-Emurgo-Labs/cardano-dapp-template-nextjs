@@ -34,6 +34,11 @@ const DarkTheme: ThemeConfig = {
     Card: {
       boxShadow: "0px 6px 16px 0px rgba(0, 0, 0, 0.08)",
     },
+    Button: {
+      colorBgContainerDisabled: Colors.GeekBlue.geekblue6,
+      colorTextDisabled: 'white',
+      borderColorDisabled: ""
+    },
     Select: {
       colorTextQuaternary: Colors.gray.gray6
     },
