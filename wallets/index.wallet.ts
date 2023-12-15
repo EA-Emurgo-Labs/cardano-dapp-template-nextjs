@@ -1,8 +1,10 @@
 import Lace from "./lace.wallet";
 import Nami from "./nami.wallet";
 import Flint from "./flint.wallet";
+import Eternl from "./eternl.wallet";
 
 export const Wallets = {
+  Eternl,
   Nami,
   Lace,
   Flint,
