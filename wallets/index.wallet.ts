@@ -1,11 +1,15 @@
 import Lace from "./lace.wallet";
 import Nami from "./nami.wallet";
 import Flint from "./flint.wallet";
+import Eternl from "./eternl.wallet";
+import Yoroi from "./yoroi.wallet";
 
 export const Wallets = {
+  Eternl,
   Nami,
   Lace,
   Flint,
+  Yoroi,
 };
 
 export const getWalletsMetadata = () => {
