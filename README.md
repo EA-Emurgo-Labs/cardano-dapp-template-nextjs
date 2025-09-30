@@ -12,7 +12,7 @@ npm install
 Create your own .env file and fill out all the variables
 
 ```sh
-cp .env.example .env
+cp .env.default .env
 ```
 
 All the variables:
